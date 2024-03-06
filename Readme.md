@@ -28,7 +28,7 @@ Go to **Signing & Capabilities** and add the **Keychain Sharing** Capabitlity
 add com.microsoft.adalcache and com.microsoft.identity.universalstorage
 ![add keychain definitions](images/Step11.png)<br />
 in your info.plst file add : msauth , msauthv2 , msauthv3 under **Queried URL Schemes**
-![add url schemes](images/Step11.1.png)<br />
+![add url schemes](images/step11.1.png)<br />
 Add a URL type using this format msauth.--BUNDLE-IDENTIFIER-HERE--
 ![add url Types](images/Step12.png)<br />
 
