@@ -4,7 +4,7 @@ In this project I showcase how I use MSAL in a swift ui application using @Envir
 I also implement a basic navigation stack to showcase how the MSAL UIViewRepresentable can appear on any view in your application
 
 ## Getting MSAL Setup
-### Create app (can skip if project already setup and you have clientId, authorityURL etc..)
+### SETUP (can [skip](#createApp) if project already setup and you have clientId, authorityURL etc..)
 basic app template
 ![app setup](images/Step1.png)
 do not use swiftData like I did here, leave it as default.
@@ -24,8 +24,17 @@ Then you save the msal configuration information that is displayed next in a not
 Next, add this [package](https://github.com/AzureAD/microsoft-authentication-library-for-objc.git) to your project
 ![add package](images/Step9.png)<br />
 Go to **Signing & Capabilities** and add the **Keychain Sharing** Capabitlity
-![add package](images/Step10.png)<br />
+![add keychain](images/step10.png)<br />
+add com.microsoft.adalcache and com.microsoft.identity.universalstorage
+![add keychain definitions](images/Step11.png)<br />
+in your info.plst file add : msauth , msauthv2 , msauthv3 under **Queried URL Schemes**
+![add url schemes](images/Step11.1.png)<br />
+Add a URL type using this format msauth.--BUNDLE-IDENTIFIER-HERE--
+![add url Types](images/Step12.png)<br />
 
+thats IT for setup... lets start building an app with MSAL
+
+### CREATE APP <a name="createApp"></a>
 
 
 
