@@ -68,7 +68,8 @@ struct MSALProperties {
   var webviewParams : MSALWebviewParameters?
 
 }
-```<br /><br />
+```
+<br /><br />
 
 Next, Create your App Model (for this app im using MV architecture)
 I am also setting up our navigation path for the future.
@@ -97,6 +98,6 @@ import SwiftUI
   }
   
 }
-```<br /><br />
+```
+<br /><br />
 
-### A third-level heading
