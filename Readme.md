@@ -1,7 +1,7 @@
 
 # MSALSwiftUI
-In this project I showcase how I use MSAL in a swift ui application using **@Environment** and **@Observable**<br />
-I also implement a basic navigation stack to showcase how the MSAL UIViewRepresentable can appear on any view in your application
+This project showcases how I use MSAL in a swift ui application using **@Environment** and **@Observable**<br />
+I also implement a basic navigation stack to show how the MSAL UIViewRepresentable can appear on any view in your application
 
 ## Getting MSAL Setup
 ### SETUP (can [skip](#createApp) if project already setup and you have clientId, authorityURL etc..)
@@ -189,6 +189,8 @@ In your root NavigationStack, this is where you want to place your MSALViewContr
 Set the frame width and height to one. this view only needs to exist on initialization of your application.
 ![Environment](images/Step20.png)<br />
 ```
+//  ContentView.swift
+
 import SwiftUI
 
 struct ContentView: View {
@@ -225,3 +227,62 @@ struct ContentView: View {
     .environment(AppModel())
 }
 ```
+
+Lets setup an interactive login, for this I make an extension off of my aggregate model and use the + syntax for file organization<br />
+so for a project using AppModel as the aggregate, I will create a new file called App+MSAL.swift<br />
+
+```
+//  App+MSAL.swift
+
+import Foundation
+import MSAL
+
+extension AppModel {
+  
+  func interactiveLogin() async throws {
+    
+    if let params = self.msalProperties.interactiveParameters, let application = self.msalProperties.application {
+      
+      params.promptType = .selectAccount
+      
+      do {
+        let result = try await Task<MSALResult, Error> { @MainActor in
+          try await application.acquireToken(with: params)
+        }.value
+
+          if let token = result.idToken, let exp = result.expiresOn {
+            msalProperties.token = Token(value: token, expiry: exp)
+          }
+          self.msalProperties.account = result.account
+          //it worked... now I need to navigate my app somwhere.
+          navigate(to: .home)
+        
+      }
+      catch let error as NSError where error.domain == MSALErrorDomain && error.code == MSALError.userCanceled.rawValue {
+        print("Canceled")
+      } catch {
+        print("Could not acquire token: \(error)")
+      }
+    }else {
+      print("Missing interactive properties and Application MSAL")
+    }
+  }
+  
+}
+```
+Now we need to add a call to this in our ContenView.swift :<br />
+
+```
+// ContentView.swift
+...
+Button(action:{
+  Task{
+    try await model.interactiveLogin() <--
+  }
+}){
+  Text("Interactive Login")
+}
+...
+```
+Now when we click our interactive button ....
+![Environment](images/Step22.png)<br />
