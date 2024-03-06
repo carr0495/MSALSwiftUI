@@ -36,12 +36,12 @@ thats IT for setup... lets start building an app with MSAL<br />
 
 ### CREATE APP <a name="createApp"></a>
 
-Create a file to store your MSAL Properties
-**IMPORTANT**
-notice my authority URL has changed from what was given to us from what was provided from microsoft.
-update your URL to match this format:
-  "https://login.microsoftonline.com/[YOUR TENANT ID]/oauth2/v2.0/authorize"
-you can find your tenant ID in the Overview section of your app registration on MS Admin Center.
+Create a file to store your MSAL Properties<br />
+**IMPORTANT**<br />
+notice my authority URL has changed from what was given to us from what was provided from microsoft.<br />
+update your URL to match this format:<br />
+  "https://login.microsoftonline.com/[YOUR TENANT ID]/oauth2/v2.0/authorize"<br />
+you can find your tenant ID in the Overview section of your app registration on MS Admin Center.<br /><br />
 
 ```
 import Foundation
@@ -55,9 +55,9 @@ struct Token {
 
 struct MSALProperties {
   var account : MSALAccount?
-  var clientID : String?      = "d1969185-57c4-405f-8fe7-475854abd807"
-  var redirectUri : String?   = "msauth.com.carrie.aiden.MSALSwiftUI://auth"
-  var authorityUrl : String?  = "https://login.microsoftonline.com/8579326f-5aee-4683-9a87-c93740220d50/oauth2/v2.0/authorize"
+  var clientID : String?      = "YOUR CLIENT ID"
+  var redirectUri : String?   = "YOUR REDIRECT URI"
+  var authorityUrl : String?  = "https://login.microsoftonline.com/YOUR TENANT ID/oauth2/v2.0/authorize"
   var authority : MSALAADAuthority?
   var scopes : [String]?      = ["user.read"]
   var token : Token?
