@@ -101,7 +101,9 @@ import SwiftUI
 ```
 <br /><br />
 
-Now we build our UIViewRepresentable for MSAL and setup of our properties. 
+Now we build our UIViewRepresentable for MSAL and setup of our properties. <br />
+This viewmodel only sets up our authority, application, and parameters so we can shove them in the environment.<br />
+The rest is pretty standard as per MSAL docs.<br />
 
 ```
 //  MSALViewControllerRepresentable.swift
@@ -186,3 +188,40 @@ Setup your View<br />
 In your root NavigationStack, this is where you want to place your MSALViewController so your app has access to its properties from anywhere inside.<br />
 Set the frame width and height to one. this view only needs to exist on initialization of your application.
 ![Environment](images/Step20.png)<br />
+```
+import SwiftUI
+
+struct ContentView: View {
+  
+  @Environment(AppModel.self) var model
+  
+    var body: some View {
+      NavigationStack(path: model.navPathBinding){
+        VStack {
+          Button(action:{}){
+            Text("Interactive Login")
+        }
+        }
+        .navigationDestination(for: AppModel.Destination.self) { page in
+          switch page {
+          case .home :
+            EmptyView()
+          case .login :
+            EmptyView()
+          case .screenOne :
+            EmptyView()
+          }
+        }
+      }
+      .overlay{
+        MSALViewController()
+          .frame(width: 1, height: 1)
+      }
+    }
+}
+
+#Preview {
+    ContentView()
+    .environment(AppModel())
+}
+```
