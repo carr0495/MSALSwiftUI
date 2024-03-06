@@ -1,6 +1,6 @@
 
 # MSALSwiftUI
-In this project I showcase how I use MSAL in a swift ui application using @Environment and @Observable
+In this project I showcase how I use MSAL in a swift ui application using **@Environment** and **@Observable**<br />
 I also implement a basic navigation stack to showcase how the MSAL UIViewRepresentable can appear on any view in your application
 
 ## Getting MSAL Setup
@@ -44,6 +44,8 @@ update your URL to match this format:<br />
 you can find your tenant ID in the Overview section of your app registration on MS Admin Center.<br /><br />
 
 ```
+//  MSALProperties.swift
+
 import Foundation
 import MSAL
 
@@ -66,8 +68,35 @@ struct MSALProperties {
   var webviewParams : MSALWebviewParameters?
 
 }
+```<br /><br />
+
+Next, Create your App Model (for this app im using MV architecture)
+I am also setting up our navigation path for the future.
+
 ```
+//  AppModel.swift
+
+import Foundation
+import SwiftUI
 
 
+
+@Observable class AppModel {
+  
+  //our msal properties.
+  var msalProperties : MSALProperties = MSALProperties()
+  
+  //Navigation
+  var navPath : NavigationPath = NavigationPath()
+  var navPathBinding: Binding<NavigationPath> {
+    Binding {
+      self.navPath
+    } set: { value in
+      self.navPath = value
+    }
+  }
+  
+}
+```<br /><br />
 
 ### A third-level heading
