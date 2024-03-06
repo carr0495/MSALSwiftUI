@@ -38,7 +38,7 @@ thats IT for setup... lets start building an app with MSAL<br />
 
 Create a file to store your MSAL Properties<br />
 **IMPORTANT**<br />
-notice my authority URL has changed from what was given to us from what was provided from microsoft.<br />
+notice my authority URL has changed from what was given to us from microsoft.<br />
 update your URL to match this format:<br />
   "https://login.microsoftonline.com/[YOUR TENANT ID]/oauth2/v2.0/authorize"<br />
 you can find your tenant ID in the Overview section of your app registration on MS Admin Center.<br /><br />
@@ -101,3 +101,88 @@ import SwiftUI
 ```
 <br /><br />
 
+Now we build our UIViewRepresentable for MSAL and setup of our properties. 
+
+```
+//  MSALViewControllerRepresentable.swift
+
+import Foundation
+import SwiftUI
+import MSAL
+
+struct MSALViewController : UIViewControllerRepresentable {
+  
+  @Environment(AppModel.self) var model
+  
+  func makeUIViewController(context: Context)  -> UIViewController {
+    
+    let viewController =  UIViewController()
+    
+    if let authURL = model.msalProperties.authorityUrl,
+       let clientID = model.msalProperties.clientID,
+       let redirectUri = model.msalProperties.redirectUri,
+       let scopes = model.msalProperties.scopes
+    {
+      guard let authorityURL = URL(string: authURL) else {
+        print("Unable to create authority URL")
+        return viewController
+      }
+      
+      let authority : MSALAADAuthority?
+      do {
+        authority = try MSALAADAuthority(url: authorityURL)
+        
+        let config = MSALPublicClientApplicationConfig(
+          clientId: clientID,
+          redirectUri: redirectUri,
+          authority:  authority)
+        
+        if let application = try? MSALPublicClientApplication(configuration: config) {
+          let webviewParameters = MSALWebviewParameters(authPresentationViewController: viewController)
+          
+          let interactiveParameters = MSALInteractiveTokenParameters(scopes: scopes, webviewParameters: webviewParameters)
+          
+          model.msalProperties = MSALProperties(authority: authority, application: application, interactiveParameters: interactiveParameters, webviewParams: webviewParameters)
+        }
+        else {print("Unable to create application.")}
+      }
+      catch {print("Unable to create authority URL")}
+    }
+    return viewController
+  }
+  
+  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    
+  }
+  
+}
+```
+<br /><br />
+Inject your Aggregate model into your environment<br />
+![Environment](images/Step21.png)<br />
+
+Add Navigation to your AppModel.swift
+
+```
+  public enum Destination: Codable, Hashable {
+    case login
+    case home
+    case screenOne
+  }
+  func navigate(to destination: Destination) {
+    navPath.append(destination)
+  }
+  
+  func navigateBack() {
+    navPath.removeLast()
+  }
+  
+  func navigateToRoot() {
+    navPath.removeLast(navPath.count)
+  }
+```
+<br /><br />
+Setup your View<br />
+In your root NavigationStack, this is where you want to place your MSALViewController so your app has access to its properties from anywhere inside.<br />
+Set the frame width and height to one. this view only needs to exist on initialization of your application.
+![Environment](images/Step20.png)<br />
