@@ -13,12 +13,16 @@ This is how your basic app should look
 ![app preview](images/Step3.png)
 ### Create Microsoft project 
 [Go to MS admin portal](https://aka.ms/admincenter) and go to **Identity** -> **Application** -> **App Registration** and create a **New Registration** <br />
-![ms dashboard](images/Step4.png)
+![ms dashboard](images/Step4.png)<br />
 Add your application name and register after matching criteria in image below.
-![ms dashboard](images/Step5.png)
+![ms dashboard](images/Step5.png)<br />
 Add the iOS platform under **Manage** -> **Authentication** -> **+Add Platform** -> **iOS/MacOS**
-![ms dashboard](images/Step6.png)
+![ms dashboard](images/Step6.png)<br />
 It will ask for bundle Identifier which is found here. 
-![ms dashboard](images/Step7.png)
-Then you save the msal configuration information that is displayed next in a notepad for future use. 
+![ms dashboard](images/Step7.png)<br />
+Then you save the msal configuration information that is displayed next in a notepad for future use. and select DONE <br />
+![add package](images/Step8.png)<br />
+Next, add this [package](https://github.com/AzureAD/microsoft-authentication-library-for-objc.git) to your project
+
+
 ### A third-level heading
