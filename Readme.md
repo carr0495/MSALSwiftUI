@@ -20,9 +20,13 @@ Add the iOS platform under **Manage** -> **Authentication** -> **+Add Platform**
 ![ms dashboard](images/Step6.png)<br />
 It will ask for bundle Identifier which is found here. 
 ![ms dashboard](images/Step7.png)<br />
-Then you save the msal configuration information that is displayed next in a notepad for future use. and select DONE <br />
-![add package](images/Step8.png)<br />
+Then you save the msal configuration information that is displayed next in a notepad for future use. and select DONE <br /><br />
 Next, add this [package](https://github.com/AzureAD/microsoft-authentication-library-for-objc.git) to your project
+![add package](images/Step9.png)<br />
+Go to **Signing & Capabilities** and add the **Keychain Sharing** Capabitlity
+![add package](images/Step10.png)<br />
+
+
 
 
 ### A third-level heading
