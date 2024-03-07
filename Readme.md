@@ -6,7 +6,7 @@ I also implement a basic navigation stack to show how the MSAL UIViewRepresentab
 Below is a complete tutorial on how to get everything working step by step in a new project, but feel free to look at the code and use it as reference if you do not want to follow entire tutorial. 
 
 (A terrible gif of the final product in action)
-[](images/MSAL.gif)
+![](MSAL.gif)
 
 ## Getting MSAL Setup
 ### SETUP (can [skip](#createApp) if project already setup and you have clientId, authorityURL etc..)
