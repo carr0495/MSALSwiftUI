@@ -10,7 +10,6 @@ import MSAL
 
 extension AppModel {
   public enum Destination: Codable, Hashable {
-    case login
     case home
     case screenOne
   }

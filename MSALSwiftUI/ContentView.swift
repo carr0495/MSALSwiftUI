@@ -26,11 +26,9 @@ struct ContentView: View {
       .navigationDestination(for: AppModel.Destination.self) { page in
         switch page {
         case .home :
-          EmptyView()
-        case .login :
-          EmptyView()
+          HomeView()
         case .screenOne :
-          EmptyView()
+          ScreenOneView()
         }
       }
     }

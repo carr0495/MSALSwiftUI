@@ -3,6 +3,8 @@
 This project showcases how I use MSAL in a swift ui application using **@Environment** and **@Observable**<br />
 I also implement a basic navigation stack to show how the MSAL UIViewRepresentable can appear on any view in your application
 
+Below is a complete tutorial on how to get everything working step by step in a new project, but feel free to look at the code and use it as reference if you do not want to follow entire tutorial. 
+
 ## Getting MSAL Setup
 ### SETUP (can [skip](#createApp) if project already setup and you have clientId, authorityURL etc..)
 basic app template
@@ -392,4 +394,70 @@ We dont need two buttons in our ContentView.swift, we only need one, and we call
 Once we try logging in again, we wont need to run through MSAL in the UI as we have an account logged in already.<br />
 ![ContentView](images/Step23.png)<br />
 
+To show that we can do an interavtive login from any view in the app, I will navigate to home, then to screen one and call the interactive login again.<br />
 
+I will make two files: <br />
+
+```
+//  HomeView.swift
+
+import SwiftUI
+
+struct HomeView: View {
+  
+  @Environment(AppModel.self) var model
+  
+    var body: some View {
+      VStack{
+        Text("IM THE HOME VIEW🧛‍♂️")
+        Button(action:{model.navigate(to: .screenOne)}){
+          Text("Navigate deeper...")
+        }
+      }
+    }
+}
+
+#Preview {
+    HomeView()
+    .environment(AppModel())
+}
+```
+
+```
+//  ScreenOneView.swift
+
+import SwiftUI
+
+struct ScreenOneView: View {
+  @Environment(AppModel.self) var model
+  
+    var body: some View {
+      VStack{
+        Text("IM THE ScreenOne VIEW💩")
+        Button(action:{
+          Task {
+            try await model.interactiveLogin()
+          }
+        }){
+          Text("Interactive Login!!")
+        }
+        Spacer()
+      }
+    }
+}
+
+#Preview {
+    ScreenOneView()
+    .environment(AppModel())
+}
+```
+<br />
+Our ContentView.swift should look like this now...<br />
+
+![ContentView](images/Step24.png)<br />
+
+And here is our app running and doing an interactive login deep within our navigation stack!
+
+![ContentView](images/Step25.png)<br />
+
+I hope this information and tutorial will help some on their MSAL SwiftUI journey. This app does not cover all scenarios and will need to be tweaked on an app by app basis. This should help people get up and running though. cheers 🍻

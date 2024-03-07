@@ -34,6 +34,10 @@
 		534F50C02B9934FE00181716 /* Step21.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50BF2B9934FE00181716 /* Step21.png */; };
 		534F50C22B9939C100181716 /* Step22.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50C12B9939C100181716 /* Step22.png */; };
 		534F50C42B9942C500181716 /* Step23.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50C32B9942C500181716 /* Step23.png */; };
+		534F50C62B99449A00181716 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F50C52B99449A00181716 /* HomeView.swift */; };
+		534F50C82B99455E00181716 /* ScreenOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F50C72B99455E00181716 /* ScreenOneView.swift */; };
+		534F50CA2B9946E300181716 /* Step24.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50C92B9946E300181716 /* Step24.png */; };
+		534F50CC2B99472C00181716 /* Step25.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50CB2B99472C00181716 /* Step25.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +70,10 @@
 		534F50BF2B9934FE00181716 /* Step21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step21.png; sourceTree = "<group>"; };
 		534F50C12B9939C100181716 /* Step22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step22.png; sourceTree = "<group>"; };
 		534F50C32B9942C500181716 /* Step23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step23.png; sourceTree = "<group>"; };
+		534F50C52B99449A00181716 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		534F50C72B99455E00181716 /* ScreenOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenOneView.swift; sourceTree = "<group>"; };
+		534F50C92B9946E300181716 /* Step24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step24.png; sourceTree = "<group>"; };
+		534F50CB2B99472C00181716 /* Step25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step25.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +116,8 @@
 				534F508C2B98F8CF00181716 /* App+MSAL.swift */,
 				534F508A2B98F4C500181716 /* MSALProperties.swift */,
 				534F50752B98EC2E00181716 /* ContentView.swift */,
+				534F50C52B99449A00181716 /* HomeView.swift */,
+				534F50C72B99455E00181716 /* ScreenOneView.swift */,
 				534F50862B98F36100181716 /* MSALViewControllerRepresentable.swift */,
 				534F50772B98EC2F00181716 /* Assets.xcassets */,
 				534F50792B98EC2F00181716 /* Preview Content */,
@@ -143,6 +153,8 @@
 				534F50BF2B9934FE00181716 /* Step21.png */,
 				534F50C12B9939C100181716 /* Step22.png */,
 				534F50C32B9942C500181716 /* Step23.png */,
+				534F50C92B9946E300181716 /* Step24.png */,
+				534F50CB2B99472C00181716 /* Step25.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -221,9 +233,11 @@
 				534F50B92B99213B00181716 /* Step1.png in Resources */,
 				534F50AB2B99213B00181716 /* Step11.png in Resources */,
 				534F50C02B9934FE00181716 /* Step21.png in Resources */,
+				534F50CA2B9946E300181716 /* Step24.png in Resources */,
 				534F50B72B99213B00181716 /* Step20.png in Resources */,
 				534F50BC2B99213B00181716 /* Step6.png in Resources */,
 				534F50AA2B99213B00181716 /* step10.png in Resources */,
+				534F50CC2B99472C00181716 /* Step25.png in Resources */,
 				534F50BA2B99213B00181716 /* Step7.png in Resources */,
 				534F50B02B99213B00181716 /* Step4.png in Resources */,
 				534F50912B9920BA00181716 /* Readme.md in Resources */,
@@ -242,7 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				534F508D2B98F8CF00181716 /* App+MSAL.swift in Sources */,
+				534F50C62B99449A00181716 /* HomeView.swift in Sources */,
 				534F50762B98EC2E00181716 /* ContentView.swift in Sources */,
+				534F50C82B99455E00181716 /* ScreenOneView.swift in Sources */,
 				534F50742B98EC2E00181716 /* MSALSwiftUIApp.swift in Sources */,
 				534F50872B98F36100181716 /* MSALViewControllerRepresentable.swift in Sources */,
 				534F508B2B98F4C500181716 /* MSALProperties.swift in Sources */,
