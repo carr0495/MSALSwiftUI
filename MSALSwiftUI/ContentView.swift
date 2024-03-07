@@ -11,33 +11,41 @@ struct ContentView: View {
   
   @Environment(AppModel.self) var model
   
-    var body: some View {
-      NavigationStack(path: model.navPathBinding){
-        VStack {
-          Button(action:{
-            Task{
-              try await model.interactiveLogin()
-            }
-          }){
-            Text("Interactive Login")
-        }
-        }
-        .navigationDestination(for: AppModel.Destination.self) { page in
-          switch page {
-          case .home :
-            EmptyView()
-          case .login :
-            EmptyView()
-          case .screenOne :
-            EmptyView()
+  var body: some View {
+    NavigationStack(path: model.navPathBinding){
+      VStack {
+        Button(action:{
+          Task{
+            try await model.interactiveLogin()
           }
+        }){
+          Text("Interactive Login")
         }
+        Button(action:{
+          Task{
+            try await model.acquireTokenSilently()
+          }
+        }){
+          Text("Silent Login👀")
+        }
+        .buttonStyle(.borderedProminent)
       }
-      .overlay{
-        MSALViewController()
-          .frame(width: 1, height: 1)
+      .navigationDestination(for: AppModel.Destination.self) { page in
+        switch page {
+        case .home :
+          EmptyView()
+        case .login :
+          EmptyView()
+        case .screenOne :
+          EmptyView()
+        }
       }
     }
+    .overlay{
+      MSALViewController()
+        .frame(width: 1, height: 1)
+    }
+  }
 }
 
 #Preview {

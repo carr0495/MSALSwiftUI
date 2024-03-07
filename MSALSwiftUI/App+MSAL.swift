@@ -57,4 +57,39 @@ extension AppModel {
     }
   }
   
+  func acquireTokenSilently() async throws{
+    
+    if let scopes = self.msalProperties.scopes, let account = self.msalProperties.account, let application = self.msalProperties.application{
+      let parameters = MSALSilentTokenParameters(scopes: scopes, account: account)
+
+      do {
+        let result = try await application.acquireTokenSilent(with: parameters)
+
+        guard let idToken = result.idToken, let exp = result.expiresOn else {
+          print("no token or expiry")
+          return
+        }
+        
+        msalProperties.token = Token(value: idToken, expiry: exp)
+        self.msalProperties.account = result.account
+        //this was a success !!
+        //next we want to navigate
+        navigate(to: .home)
+
+        
+      } catch let error as NSError where error.domain == MSALErrorDomain &&
+                error.code == MSALError.interactionRequired.rawValue {
+        print("Could not acquire token silently: \(error)")
+        return try await interactiveLogin() //if I cant get it silently... Interactive!
+      } catch {
+        print("silentTokenError : \(error)")
+      }
+    }else{
+      print("application, scopes,account,parameters could be nil ... check")
+      print("scopes: \(msalProperties.scopes)")
+      print("application: \(msalProperties.application)")
+      print("account: \(msalProperties.account)")
+    }
+  }
+  
 }

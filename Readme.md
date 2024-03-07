@@ -286,3 +286,62 @@ Button(action:{
 ```
 Now when we click our interactive button ....
 ![Environment](images/Step22.png)<br />
+
+Next we can implement the Silent Refresh functionality:<br />
+
+```
+  func acquireTokenSilently() async throws{
+    
+    if let scopes = self.msalProperties.scopes, let account = self.msalProperties.account, let application = self.msalProperties.application{
+      let parameters = MSALSilentTokenParameters(scopes: scopes, account: account)
+
+      do {
+        let result = try await application.acquireTokenSilent(with: parameters)
+
+        guard let idToken = result.idToken, let exp = result.expiresOn else {
+          print("no token or expiry")
+          return
+        }
+        
+        msalProperties.token = Token(value: idToken, expiry: exp)
+        self.msalProperties.account = result.account
+        //this was a success !!
+        //next we want to navigate
+        navigate(to: .home)
+
+        
+      } catch let error as NSError where error.domain == MSALErrorDomain &&
+                error.code == MSALError.interactionRequired.rawValue {
+        print("Could not acquire token silently: \(error)")
+        return try await interactiveLogin() //if I cant get it silently... Interactive!
+      } catch {
+        print("silentTokenError : \(error)")
+      }
+    }
+  }
+```
+<br />
+
+Lets add a button in our ContentView.swift to try our silent token. 
+
+```
+//ContentView.swift
+
+...
+Button(action:{
+Task{
+try await model.acquireTokenSilently()
+}
+}){
+Text("Silent Login👀")
+}
+.buttonStyle(.borderedProminent)
+...
+```
+Now if we run our application we can do an interactive login, go back and then log in again but silently...<br />
+But if we launch the app for the first time, we cannot do a silent aquire of our token because we dont have an account!<br />
+We can make this better by adding a function to check if we have an account, and then we handle if we want to have interactive or silent login.<br />
+
+Back in App+MSAL.swift:
+
+
