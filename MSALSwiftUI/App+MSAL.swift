@@ -133,4 +133,60 @@ extension AppModel {
     return currentAccount
   }
   
+  public func logout() async throws {
+
+    guard let account = self.msalProperties.account else { return }
+    
+    if let application = self.msalProperties.application {
+      _ = try await removeAllAccounts()
+      
+      Task {
+        {
+          if let webViewParams = self.msalProperties.webviewParams {
+            let signoutParameters = MSALSignoutParameters(webviewParameters: webViewParams)
+            signoutParameters.signoutFromBrowser = false
+            DispatchQueue.main.async {
+              self.msalProperties.account = nil
+              self.msalProperties.token = nil
+              application.signout(with: account, signoutParameters: signoutParameters, completionBlock: {(success, error) in
+                if let error = error {
+                  print("Couldn't sign out account with error: \(error)")
+                  return
+                }
+
+                print("Sign out SUCCESS")
+                self.navigateToRoot()
+              })
+            }
+          }else {
+            print("NO WEBVIEW PARAMS FOR LOGGING OUT")
+          }
+         
+        }()
+      }
+      
+    }
+  }
+  
+  func removeAllAccounts() async throws -> MSALAccount? {
+    
+    var currentAccount: MSALAccount?
+    
+    if let application = self.msalProperties.application {
+      
+      do {
+        var cachedAccounts = try application.allAccounts()
+        if !cachedAccounts.isEmpty {
+          cachedAccounts.removeAll()
+          print("Cached accounts removed")
+        }
+      } catch {
+        print("Didn't find any accounts in cache: \(error)")
+      }
+      return currentAccount
+    }
+    
+    return currentAccount
+  }
+  
 }

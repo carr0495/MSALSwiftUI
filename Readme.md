@@ -5,6 +5,9 @@ I also implement a basic navigation stack to show how the MSAL UIViewRepresentab
 
 Below is a complete tutorial on how to get everything working step by step in a new project, but feel free to look at the code and use it as reference if you do not want to follow entire tutorial. 
 
+(A terrible gif of the final product in action)
+[](images/MSAL.gif)
+
 ## Getting MSAL Setup
 ### SETUP (can [skip](#createApp) if project already setup and you have clientId, authorityURL etc..)
 basic app template
@@ -460,4 +463,84 @@ And here is our app running and doing an interactive login deep within our navig
 
 ![ContentView](images/Step25.png)<br />
 
-I hope this information and tutorial will help some on their MSAL SwiftUI journey. This app does not cover all scenarios and will need to be tweaked on an app by app basis. This should help people get up and running though. cheers 🍻
+Finally, we want to log out!<br />
+Lets go back to our App+MSAL.swift and add two more functions...<br />
+notice in our logout functions success we navigate to the root of our application.<br />
+
+```
+  public func logout() async throws {
+
+    guard let account = self.msalProperties.account else { return }
+    
+    if let application = self.msalProperties.application {
+      _ = try await removeAllAccounts()
+      
+      Task {
+        {
+          if let webViewParams = self.msalProperties.webviewParams {
+            let signoutParameters = MSALSignoutParameters(webviewParameters: webViewParams)
+            signoutParameters.signoutFromBrowser = false
+            DispatchQueue.main.async {
+              self.msalProperties.account = nil
+              self.msalProperties.token = nil
+              application.signout(with: account, signoutParameters: signoutParameters, completionBlock: {(success, error) in
+                if let error = error {
+                  print("Couldn't sign out account with error: \(error)")
+                  return
+                }
+
+                print("Sign out SUCCESS")
+                self.navigateToRoot()
+              })
+            }
+          }else {
+            print("NO WEBVIEW PARAMS FOR LOGGING OUT")
+          }
+         
+        }()
+      }
+      
+    }
+  }
+  
+  func removeAllAccounts() async throws -> MSALAccount? {
+    
+    var currentAccount: MSALAccount?
+    
+    if let application = self.msalProperties.application {
+      
+      do {
+        var cachedAccounts = try application.allAccounts()
+        if !cachedAccounts.isEmpty {
+          cachedAccounts.removeAll()
+          print("Cached accounts removed")
+        }
+      } catch {
+        print("Didn't find any accounts in cache: \(error)")
+      }
+      return currentAccount
+    }
+    
+    return currentAccount
+  }
+```
+
+Next we want to add a button in our UI to log out. <br />
+Back in our ScreenOneView.swift...
+
+```
+//ScreenOneView.swift
+...
+        Button(action:{
+          Task{
+            try await model.checkAccountThenLogin()
+          }
+        }){
+          Text("LOGOUT")
+        }
+        .buttonStyle(.borderedProminent)
+...
+```
+
+
+I hope this information and tutorial will help some on their MSAL SwiftUI journey. This app does not cover all scenarios and will need to be tweaked on an app by app basis. This should help people get up and running. cheers 🍻

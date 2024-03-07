@@ -20,6 +20,14 @@ struct ScreenOneView: View {
         }){
           Text("Interactive Login!!")
         }
+        Button(action:{
+          Task{
+            try await model.logout()
+          }
+        }){
+          Text("LOGOUT")
+        }
+        .buttonStyle(.borderedProminent)
         Spacer()
       }
     }

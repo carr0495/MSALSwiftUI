@@ -38,6 +38,7 @@
 		534F50C82B99455E00181716 /* ScreenOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F50C72B99455E00181716 /* ScreenOneView.swift */; };
 		534F50CA2B9946E300181716 /* Step24.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50C92B9946E300181716 /* Step24.png */; };
 		534F50CC2B99472C00181716 /* Step25.png in Resources */ = {isa = PBXBuildFile; fileRef = 534F50CB2B99472C00181716 /* Step25.png */; };
+		534F50CE2B994D8F00181716 /* MSAL.gif in Resources */ = {isa = PBXBuildFile; fileRef = 534F50CD2B994D8F00181716 /* MSAL.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		534F50C72B99455E00181716 /* ScreenOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenOneView.swift; sourceTree = "<group>"; };
 		534F50C92B9946E300181716 /* Step24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step24.png; sourceTree = "<group>"; };
 		534F50CB2B99472C00181716 /* Step25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step25.png; sourceTree = "<group>"; };
+		534F50CD2B994D8F00181716 /* MSAL.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = MSAL.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				534F50C32B9942C500181716 /* Step23.png */,
 				534F50C92B9946E300181716 /* Step24.png */,
 				534F50CB2B99472C00181716 /* Step25.png */,
+				534F50CD2B994D8F00181716 /* MSAL.gif */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				534F50AD2B99213B00181716 /* Step2.png in Resources */,
 				534F50BE2B9934CA00181716 /* Step12.png in Resources */,
 				534F50AE2B99213B00181716 /* Step3.png in Resources */,
+				534F50CE2B994D8F00181716 /* MSAL.gif in Resources */,
 				534F50B22B99213B00181716 /* Step5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
