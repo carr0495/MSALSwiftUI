@@ -92,4 +92,46 @@ extension AppModel {
     }
   }
   
+  public func checkAccountThenLogin() async throws {
+    
+    //check if account exists then decide whether new login or
+    
+    if let account = msalProperties.account {
+  
+    try await acquireTokenSilently()
+
+    }else{
+      // no account
+      if let app = msalProperties.application {
+
+        do {
+          guard let account = try await getAccount(application: app) else {
+            return try await interactiveLogin()
+          }
+          print("Found a signed in account \(String(describing: account.username!)). Updating data for that account...")
+          msalProperties.account = account
+          try await acquireTokenSilently()
+        } catch {
+          print("Couldn't query current account with error: \(error)")
+        }
+      }else {
+        print("no application when loading current account")
+      }
+    }
+  }
+  
+  func getAccount(application: MSALPublicClientApplication) async throws -> MSALAccount? {
+    var currentAccount: MSALAccount?
+    do {
+      let cachedAccounts = try application.allAccounts()
+      if !cachedAccounts.isEmpty {
+        currentAccount = cachedAccounts.first
+        print("current accoount: \(currentAccount?.username ?? "n/a")")
+      }
+    } catch {
+      print("Didn't find any accounts in cache: \(error)")
+    }
+    return currentAccount
+  }
+  
 }

@@ -16,17 +16,10 @@ struct ContentView: View {
       VStack {
         Button(action:{
           Task{
-            try await model.interactiveLogin()
+            try await model.checkAccountThenLogin()
           }
         }){
-          Text("Interactive Login")
-        }
-        Button(action:{
-          Task{
-            try await model.acquireTokenSilently()
-          }
-        }){
-          Text("Silent Login👀")
+          Text("LOGIN")
         }
         .buttonStyle(.borderedProminent)
       }

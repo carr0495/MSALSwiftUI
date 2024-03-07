@@ -342,6 +342,54 @@ Now if we run our application we can do an interactive login, go back and then l
 But if we launch the app for the first time, we cannot do a silent aquire of our token because we dont have an account!<br />
 We can make this better by adding a function to check if we have an account, and then we handle if we want to have interactive or silent login.<br />
 
-Back in App+MSAL.swift:
+Back in App+MSAL.swift add two functions:
+
+```
+  public func checkAccountThenLogin() async throws {
+    
+    //check if account exists then decide whether new login or
+    
+    if let account = msalProperties.account {
+  
+    try await acquireTokenSilently()
+
+    }else{
+      // no account
+      if let app = msalProperties.application {
+
+        do {
+          guard let account = try await getAccount(application: app) else {
+            return try await interactiveLogin()
+          }
+          print("Found a signed in account \(String(describing: account.username!)). Updating data for that account...")
+          msalProperties.account = account
+          try await acquireTokenSilently()
+        } catch {
+          print("Couldn't query current account with error: \(error)")
+        }
+      }else {
+        print("no application when loading current account")
+      }
+    }
+  }
+  
+  func getAccount(application: MSALPublicClientApplication) async throws -> MSALAccount? {
+    var currentAccount: MSALAccount?
+    do {
+      let cachedAccounts = try application.allAccounts()
+      if !cachedAccounts.isEmpty {
+        currentAccount = cachedAccounts.first
+        print("current accoount: \(currentAccount?.username ?? "n/a")")
+      }
+    } catch {
+      print("Didn't find any accounts in cache: \(error)")
+    }
+    return currentAccount
+  }
+```
+
+We dont need two buttons in our ContentView.swift, we only need one, and we call our new function instead.<br />
+Once we try logging in again, we wont need to run through MSAL in the UI as we have an account logged in already.<br />
+![ContentView](images/Step23.png)<br />
 
 
